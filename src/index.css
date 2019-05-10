@@ -1,3 +1,6 @@
-/* .active {
+.active {
     color:orange;
-} */
+}
+a:active{
+    color:orange;
+}

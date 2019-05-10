@@ -1,71 +1,12 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Link, NavLink, Redirect, Prompt} from 'react-router-dom';
 import PropTypes from 'prop-types';
-const activeStyles = {
-    color:'orange',
-    background:'#333'
-}
-
-const Home = () => {
-  return (
-    <div>
-      <h1>Welcome Home</h1>
-    </div>
-  );
-};
-
-const About = () => {
-  return (
-    <div>
-      <h1>About US</h1>
-    </div>
-  );
-};
-const Contact = () => {
-  return (
-    <div>
-      <h1>Please contact me:</h1>
-    </div>
-  );
-};
-const PageOne = () => {
-  return <h1>Lets learn some HTML</h1>;
-};
-const PageTwo = () => {
-  return <h1>Lets learn some CSS</h1>;
-};
-const PageThree = () => {
-  return <h1>Lets learn some JavaScript</h1>;
-};
-const Topics = () => {
-  return (
-    <div>
-      <h2>Topics</h2>
-      <hr />
-      <ul>
-        <li>
-          <NavLink to="/topics/html">HTML</NavLink>
-        </li>
-        <li>
-          <NavLink to="/topics/css">CSS</NavLink>
-        </li>
-        <li>
-          <NavLink to="/topics/js">JavaScript</NavLink>
-        </li>
-      </ul>
-      <Route path={`/topics/html`} component={PageOne} />
-      <Route path={`/topics/css`} component={PageTwo} />
-      <Route path={`/topics/js`} component={PageThree} />
-    </div>
-  );
-};
-const User = (props) => {
-    return (
-        <div>
-        <h2>Welcome {props.username}</h2>
-        </div>
-    )
-}
+import Home from './components/Home';
+import About from './components/About';
+import Contact from './components/Contact'
+import User from './components/User';
+import Topics from './components/Topics';
+import Navbar from './components/Navbar';
 
 class App extends Component {
     state = {
@@ -82,34 +23,20 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <ul>
-            <li>
-              <NavLink exact to="/" activeStyle={activeStyles}>HOME</NavLink>
-            </li>
-            <li>
-              <NavLink to="/about">ABOUT</NavLink>
-            </li>
-            <li>
-              <NavLink to="/contact">CONTACT</NavLink>
-            </li>
-            <li>
-              <NavLink to="/topics">TOPICS</NavLink>
-            </li>
-            <li>
-              <NavLink to="/user/Asabeneh">User Asabeneh</NavLink>
-            </li>
-             <li>
-              <NavLink to="/user/Brook">User Brook</NavLink>
-            </li>
-             <li>
-              <NavLink to="/user/David">User David</NavLink>
-            </li>
-          </ul>
+          <Navbar / >
+          <Prompt when = {!isLoggedIn} message =  {(location) => {
+              if(location.pathname.startsWith('/topics')){
+                  return "You reached a perimuim sections"
+              }
+                    
+          }} / >
         <button onClick = {this.handleLogin}>{status}</button>
           <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About} />
           <Route path="/contact" component={Contact} />
-          <Route path="/topics" component={Topics} />
+          <Route path="/topics" component={(props) => {
+              return isLoggedIn ? <Topics {...props} / > : <Redirect to="/" />
+          }} />
           <Route path="/user/:username" component={(props) => {
               return isLoggedIn ? <User username =  {props.match.params.username}/> : <Redirect to="/"  />
             } }/>
