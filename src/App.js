@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Link, NavLink } from 'react-router-dom';
+import { BrowserRouter, Route, Link, NavLink, Redirect} from 'react-router-dom';
 import PropTypes from 'prop-types';
 const activeStyles = {
     color:'orange',
@@ -59,6 +59,14 @@ const Topics = () => {
     </div>
   );
 };
+const User = (props) => {
+console.log(props)
+    return (
+        <div>
+        <h2>Welcome {props.match.params.id}</h2>
+        </div>
+    )
+}
 
 class App extends Component {
   render() {
@@ -78,12 +86,16 @@ class App extends Component {
             <li>
               <NavLink to="/topics">TOPICS</NavLink>
             </li>
+            <li>
+              <NavLink to="/user/username">User</NavLink>
+            </li>
           </ul>
 
           <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About} />
           <Route path="/contact" component={Contact} />
           <Route path="/topics" component={Topics} />
+          <Route path="/user/:id" component={User} />
         </div>
       </BrowserRouter>
     );
