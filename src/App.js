@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Link, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
+const activeStyles = {
+    color:'orange',
+    background:'#333'
+}
 
 const Home = () => {
   return (
@@ -40,13 +44,13 @@ const Topics = () => {
       <hr />
       <ul>
         <li>
-          <Link to="/topics/html">HTML</Link>
+          <NavLink to="/topics/html">HTML</NavLink>
         </li>
         <li>
-          <Link to="/topics/css">CSS</Link>
+          <NavLink to="/topics/css">CSS</NavLink>
         </li>
         <li>
-          <Link to="/topics/js">JavaScript</Link>
+          <NavLink to="/topics/js">JavaScript</NavLink>
         </li>
       </ul>
       <Route path={`/topics/html`} component={PageOne} />
@@ -63,16 +67,16 @@ class App extends Component {
         <div>
           <ul>
             <li>
-              <Link to="/">HOME</Link>
+              <NavLink exact to="/" activeStyle={activeStyles}>HOME</NavLink>
             </li>
             <li>
-              <Link to="/about">ABOUT</Link>
+              <NavLink to="/about">ABOUT</NavLink>
             </li>
             <li>
-              <Link to="/contact">CONTACT</Link>
+              <NavLink to="/contact">CONTACT</NavLink>
             </li>
             <li>
-              <Link to="/topics">TOPICS</Link>
+              <NavLink to="/topics">TOPICS</NavLink>
             </li>
           </ul>
 
